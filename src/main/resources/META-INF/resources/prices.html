@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prices</title>
+
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly-additions.min.css">
+</head>
+<body>
+<div class="container">
+
+    <h2>Last messages</h2>
+    <div class="row" id="last-messages">
+    </div>
+</div>
+
+<div class="container">
+
+    <h2>New message</h2>
+    <div class="row">
+    <p class="col-md-12">Entry: _____ Send</p>
+    </div>
+</div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    var source = new EventSource("/prices/stream");
+    source.onmessage = function (event) {
+        checkMaxMessage();
+        addRow(event);
+        // document.getElementById("content").innerHTML += event.data;
+    };
+
+    function addRow (event) {
+        document.querySelector('#last-messages').insertAdjacentHTML(
+            'afterbegin',
+            `<p class="col-md-12">` + event.data + `</p>`      
+        )
+    }
+
+    function checkMaxMessage () {
+        var count = document.getElementById("last-messages").childElementCount; 
+        // document.getElementById("content").innerHTML += " (" + count + ") ";
+        if (count > 3) {
+            document.getElementById("last-messages").lastChild.remove();
+        }
+    }
+
+</script>
+</html>
