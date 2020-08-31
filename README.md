@@ -6,8 +6,8 @@ If you want to learn more about Quarkus, please visit its website: https://quark
 
 ## Precondition for running the app
 
-* local kafka cluster runnning
-* unprotected broker port 9092 open
+* Local kafka cluster runnning
+* Unprotected broker port 9092 open
 
 App is based on Quarkus Kafka Quickstart example: https://quarkus.io/guides/kafka.
 
@@ -17,6 +17,18 @@ You can run your application in dev mode that enables live coding using:
 ```
 ./mvnw quarkus:dev
 ```
+
+## Inserting Data to Kafka
+
+Data can be entered into Kafka via a camel route. It can be invoked via UI (http://localhost:8080/message.html) or via `curl`.
+
+```
+curl -X POST -d "name=Hans&message=foo bar" http://localhost:8080/camel/message
+```
+
+## Retrieving Data from Kafka
+
+The UI recieves Server-side events in case new messages arrive in Kafka. 
 
 ## Packaging and running the application
 

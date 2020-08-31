@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Messages</title>
+
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly-additions.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Last messages</h2>
+        <div class="row" id="last-messages">
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>New message</h2>
+        <div class="row">
+            <form action="/camel/hallo" method="post" class="col-md-12">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name">
+                <label for="message">Message</label>
+                <input type="text" id="message" name="message">
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://momentjs.com/downloads/moment.js"></script>
+<script>
+
+    const MAX_MESSAGES = 5;
+
+    /* Form handling */
+    var form = document.querySelector('form');
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var data = new FormData(form);
+        check(data);
+    });
+
+    function check(data) {
+        var request = new XMLHttpRequest();
+        request.addEventListener('load', function (event) {
+            if (request.status >= 200 && request.status < 300) {
+                console.log(request.responseText);
+            } else {
+                console.warn(request.statusText, request.responseText);
+            }
+        });
+        request.open("POST", "/camel/message", true);
+        request.send(data);
+    }
+
+    /* Event source */
+    var source = new EventSource("/message/stream");
+    source.onmessage = function (event) {
+
+        var message = JSON.parse(event.data);
+
+        checkMaxMessage();
+        addMessage(message);
+    };
+
+    function checkMaxMessage() {
+        var count = document.getElementById("last-messages").childElementCount;
+        if (count >= MAX_MESSAGES-1) {
+            document.getElementById("last-messages").lastChild.remove();
+        }
+    }
+
+    function addMessage(message) {
+        dt = new Date(message.date);
+        var ts = moment(dt).format('hh:mm')
+
+        document.querySelector('#last-messages').insertAdjacentHTML(
+            'afterbegin',
+            `<p class="col-md-12"><strong>` + message.name + `:&nbsp;</strong>` +
+            message.message + `<sub><em>&nbsp;(` + ts + `)</em></sub></p>`
+        )
+    }
+</script>
+
+</html>
