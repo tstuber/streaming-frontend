@@ -2,6 +2,9 @@ package ch.ipt.handson.kafka.produce;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 
@@ -15,10 +18,12 @@ public class MessageProcessor implements Processor {
     public void process(Exchange exchange) throws Exception {
 
         // Retrieve POST parameters
-        String ts = exchange.getIn().getHeader("timestamp").toString();
-        String msg = exchange.getIn().getHeader("message").toString();
+        String jsonString = exchange.getIn().getBody(String.class);
 
-        Date timestamp = new Date(Long.parseLong(ts));
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode jsonRequest = mapper.readTree(jsonString);
+        Date timestamp = new Date(jsonRequest.get("timestamp").longValue());
+        String msg = jsonRequest.get("message").textValue();
 
         // Create simulated CDC event message
         Message message = new Message(counter++, timestamp, "Dummy Username", msg);

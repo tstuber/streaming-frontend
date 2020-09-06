@@ -21,7 +21,7 @@
     <div class="container">
         <h2>New message</h2>
         <div class="row">
-            <form action="/camel/hallo" method="post" class="col-md-12">
+            <form action="/camel/message" method="post" class="col-md-12">
                 <label for="message">Message</label>
                 <input type="text" id="message" name="message">
                 <input type="hidden" id="submit-date" name="timestamp">
@@ -41,8 +41,12 @@
     var form = document.querySelector('form');
     form.addEventListener('submit', function (event) {
         event.preventDefault();
-        document.getElementById("submit-date").value = new Date().getTime();
-        var data = new FormData(form);
+
+        var timestamp = new Date().getTime();
+        var message = document.getElementById("message").value
+
+        var data = JSON.stringify({"timestamp": timestamp, "message": message});
+        console.log("POST request: " + data);
         check(data);
     });
 
@@ -50,12 +54,13 @@
         var request = new XMLHttpRequest();
         request.addEventListener('load', function (event) {
             if (request.status >= 200 && request.status < 300) {
-                console.log(request.responseText);
+                console.log("POST response: " + request.responseText);
             } else {
                 console.warn(request.statusText, request.responseText);
             }
         });
         request.open("POST", "/camel/message", true);
+        request.setRequestHeader("Content-Type", "application/json");
         request.send(data);
     }
 
