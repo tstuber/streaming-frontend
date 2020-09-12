@@ -24,6 +24,8 @@
             <form action="/camel/message" method="post" class="col-md-12">
                 <label for="message">Message</label>
                 <input type="text" id="message" name="message">
+                <label for="endpoint">Endpoint</label>
+                <input type="text" id="endpoint" name="message" value="/camel/message">
                 <input type="hidden" id="submit-date" name="timestamp">
                 <button type="submit">Send</button>
             </form>
@@ -44,10 +46,11 @@
 
         var timestamp = new Date().getTime();
         var message = document.getElementById("message").value
+        var endpoint = document.getElementById("endpoint").value
 
         var data = JSON.stringify({"timestamp": timestamp, "message": message});
         console.log("POST request: " + data);
-        check(data);
+        check(data, endpoint);
     });
 
     function check(data) {
@@ -59,7 +62,7 @@
                 console.warn(request.statusText, request.responseText);
             }
         });
-        request.open("POST", "/camel/message", true);
+        request.open("POST", endpoint, true);
         request.setRequestHeader("Content-Type", "application/json");
         request.send(data);
     }
