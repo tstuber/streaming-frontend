@@ -53,7 +53,7 @@
         check(data, endpoint);
     });
 
-    function check(data) {
+    function check(data, endpoint) {
         var request = new XMLHttpRequest();
         request.addEventListener('load', function (event) {
             if (request.status >= 200 && request.status < 300) {
