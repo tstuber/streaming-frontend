@@ -85,13 +85,13 @@
     }
 
     function addMessage(message) {
-        dt = new Date(message.timestamp);
-        var ts = moment(dt).format('hh:mm')
+        // parse unix timestamp (string) into date format.
+        var timestamp = moment(Number(message.timestamp)).format('hh:mm')
 
         document.querySelector('#last-messages').insertAdjacentHTML(
             'afterbegin',
-            `<p class="col-md-12"><strong>` + message.name + `:&nbsp;</strong>` +
-            message.message + `<sub><em>&nbsp;(` + ts + `)</em></sub></p>`
+            `<p class="col-md-12"><strong>` + message.username + `:&nbsp;</strong>` +
+            message.message + `<sub><em>&nbsp;(` + timestamp + `)</em></sub></p>`
         )
     }
 </script>
