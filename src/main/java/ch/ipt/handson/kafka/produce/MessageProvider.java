@@ -20,6 +20,6 @@ public class MessageProvider extends EndpointRouteBuilder {
                 //.log("${in.headers}")
                 .process(processor)
                 .marshal().json()
-                .to("kafka:messages?brokers={{kafka.bootstrap.servers}}");
+                .to("kafka:{{kafka.topic}}?brokers={{kafka.bootstrap.url}}");
     }
 }
