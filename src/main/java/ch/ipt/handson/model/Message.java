@@ -10,25 +10,29 @@ public class Message {
 
     private int id;
     private String timestamp;
-    private String name;
+    private String username;
     private String message;
 
-    public Message(int id, String timestamp, String name, String message) {
+    public Message(int id, String timestamp, String username, String message) {
         this.id = id;
         this.timestamp = timestamp;
-        this.name = name;
+        this.username = username;
         this.message = message;
     }
 
-    public Message(int id, String name, String message) {
+    public Message(int id, String username, String message) {
         this.id = id;
         this.timestamp = new Date().toString();
-        this.name = name;
+        this.username = username;
         this.message = message;
     }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getMessage() {
@@ -39,24 +43,20 @@ public class Message {
         this.message = message;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getDate() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setDate(String timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     @Override
@@ -67,11 +67,11 @@ public class Message {
 
         Message other = (Message) obj;
 
-        return Objects.equals(other.name, this.name);
+        return Objects.equals(other.username, this.username);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.name);
+        return Objects.hash(this.username);
     }
 }
