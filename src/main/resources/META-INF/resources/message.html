@@ -85,7 +85,7 @@
     }
 
     function addMessage(message) {
-        dt = new Date(message.date);
+        dt = new Date(message.timestamp);
         var ts = moment(dt).format('hh:mm')
 
         document.querySelector('#last-messages').insertAdjacentHTML(

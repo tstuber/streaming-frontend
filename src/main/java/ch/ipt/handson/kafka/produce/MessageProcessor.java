@@ -22,7 +22,7 @@ public class MessageProcessor implements Processor {
 
         ObjectMapper mapper = new ObjectMapper();
         JsonNode jsonRequest = mapper.readTree(jsonString);
-        Date timestamp = new Date(jsonRequest.get("timestamp").longValue());
+        String timestamp = jsonRequest.get("timestamp").textValue();
         String msg = jsonRequest.get("message").textValue();
 
         // Create simulated CDC event message

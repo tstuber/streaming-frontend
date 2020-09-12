@@ -9,20 +9,20 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 public class Message {
 
     private int id;
-    private Date date;
+    private String timestamp;
     private String name;
     private String message;
 
-    public Message(int id, Date date, String name, String message) {
+    public Message(int id, String timestamp, String name, String message) {
         this.id = id;
-        this.date = date;
+        this.timestamp = timestamp;
         this.name = name;
         this.message = message;
     }
 
     public Message(int id, String name, String message) {
         this.id = id;
-        this.date = new Date();
+        this.timestamp = new Date().toString();
         this.name = name;
         this.message = message;
     }
@@ -47,12 +47,12 @@ public class Message {
         this.name = name;
     }
 
-    public Date getDate() {
-        return date;
+    public String getDate() {
+        return timestamp;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDate(String timestamp) {
+        this.timestamp = timestamp;
     }
 
     public void setId(int id) {
