@@ -26,7 +26,9 @@
                 <input type="text" id="message" name="message" size="100%"><br><br>
                 <label for="endpoint">Endpoint: </label>
                 <input type="text" id="endpoint" name="endpoint" value="/direct/message" size="100%"><br>
-                <p>The default endpoint <code>/direct/message</code> is provided by this app that allows you to write messages directly to Kafka. You can change it to your own Fuse Endpoint.</p>
+                <p>The default endpoint <code>/direct/message</code> is provided by this app that allows you to write messages directly to Kafka. You can change it to your own Fuse Endpoint.</p><br>
+                <label for="user-key">User key: </label>
+                <input type="text" id="user-key" name="user-key" size="100%"><br>
                 <input type="hidden" id="submit-date" name="timestamp"><br>
                 <button type="submit">Send</button>
             </form>
@@ -64,6 +66,11 @@
             }
         });
         request.open("POST", endpoint, true);
+
+        // Temporary: Inject user_key
+        var user_key = document.getElementById("user-key").value
+        request.setRequestHeader("user_key", user_key)
+
         request.setRequestHeader("Content-Type", "application/json");
         request.send(data);
 
