@@ -23,7 +23,7 @@ You can run your application in dev mode that enables live coding using:
 Data can be entered into Kafka via a camel route. It can be invoked via UI (http://localhost:8080/message.html) or via `curl`.
 
 ```
-curl --header "Content-Type: application/json" -X POST --data '{"timestamp":"1599336927881", "message":"foo bar"}' http://localhost:8080/camel/message
+curl --header "Content-Type: application/json" -X POST --data '{"timestamp":"1599336927881", "message":"foo bar"}' http://localhost:8080/direct/message
 ```
 
 ## Retrieving Data from Kafka

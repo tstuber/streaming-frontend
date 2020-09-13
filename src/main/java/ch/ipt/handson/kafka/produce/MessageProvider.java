@@ -11,15 +11,20 @@ public class MessageProvider extends EndpointRouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from(platformHttp("/camel/message?httpMethodRestrict=GET"))
+        from(platformHttp("/direct/message?httpMethodRestrict=GET"))
                 .setBody().simple("Camel runs on ${hostname}");
 
-         from(platformHttp("/camel/message?httpMethodRestrict=POST"))
+         from(platformHttp("/direct/message?httpMethodRestrict=POST"))
                 //.to(log("Debug").showExchangePattern(true).showBodyType(true))
                 //.log("${in.body}")
                 //.log("${in.headers}")
                 .process(processor)
                 .marshal().json()
-                .to("kafka:{{kafka.topic}}?brokers={{kafka.bootstrap.url}}");
+                .to("kafka:{{mp.messaging.incoming.messages.topic}}"
+                    + "?brokers={{mp.messaging.incoming.messages.bootstrap.servers}}"
+                    + "&securityProtocol=SSL"
+                    + "&sslTruststoreLocation={{mp.messaging.incoming.messages.ssl.truststore.location}}"
+                    + "&sslTruststorePassword={{mp.messaging.incoming.messages.ssl.truststore.password}}"
+                    + "&sslTruststoreType={{mp.messaging.incoming.messages.ssl.truststore.type}}");
     }
 }
