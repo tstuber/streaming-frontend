@@ -1,7 +1,5 @@
 package ch.ipt.handson.kafka.produce;
 
-import java.util.Date;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
