@@ -5,42 +5,92 @@
     <meta charset="UTF-8">
     <title>Messages</title>
 
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly.min.css">
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly-additions.min.css">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 </head>
 
 <body>
     <div class="container">
-        <h2>Last messages</h2>
-        <div class="row" id="last-messages">
-        </div>
+        <!-- Dropdown Structure -->
+        <ul id="dropdown1" class="dropdown-content">
+            <li><a href="https://github.com/tstuber/streaming-frontend"><span class="red-text text-darken-4">Source Code Frontend App</span></a></li>
+            <li><a href="https://bitbucket.org/cs0978/agile-integration"><span class="red-text text-darken-4">Source Code Tutorial</span></a></li>
+            <li class="divider"></li>
+            <li><a href="https://www.youtube.com/watch?v=2Q_ZzBGPdqE"><span class="red-text text-darken-4">Help</span</a></li>
+        </ul>
+        <nav>
+            <div class="nav-wrapper red darken-4">
+                <a href="#!" class="brand-logo center"><i class="material-icons">flash_on</i>Mess<b>anger</b></a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="tokens" target="_blank">Auth Tokens</a></li>
+                    <!-- Dropdown Trigger -->
+                    <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Resources<i
+                                class="material-icons right">arrow_drop_down</i></a></li>
+                </ul>
+            </div>
+        </nav>
     </div>
 
     <div class="container">
-        <h2>New message</h2>
+        <h5>Send new message</h5>
         <div class="row">
-            <form class="col-md-12">
-                <label for="message">Message: </label>
-                <input type="text" id="message" name="message" size="100%"><br><br>
-                <label for="endpoint">Endpoint: </label>
-                <input type="text" id="endpoint" name="endpoint" value="/direct/message" size="100%"><br>
-                <p>The default endpoint <code>/direct/message</code> is provided by this app that allows you to write messages directly to Kafka. You can change it to your own Fuse Endpoint.</p><br>
-                <label for="user-key">User key: </label>
-                <input type="text" id="user-key" name="user-key" size="100%"><br>
+            <form class="col s12">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">mode_edit</i>
+                    <input id="message" type="text" class="validate">
+                    <label for="message">Message</label>
+                </div>
+
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">computer</i>
+                    <textarea id="endpoint" class="materialize-textarea"></textarea>
+                    <label for="endpoint">Endpoint</label>
+                    <p>The endpoint <code>/direct/message</code> is provided by this frontend app and allows you to
+                        write messages directly to Kafka. The goal is that you define your own endpoint.</p>
+                </div>
+
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">https</i>
+                    <textarea id="user_key" class="materialize-textarea"></textarea>
+                    <label for="user_key">User key</label>
+                </div>
+
                 <input type="hidden" id="submit-date" name="timestamp"><br>
-                <button type="submit">Send</button>
+
+                <button class="btn waves-effect waves-light red darken-4" type="submit" name="action">Send
+                    <i class="material-icons right">send</i>
+                </button>
+
             </form>
         </div>
     </div>
+<br>
+    <div class="container">
+        <h5>Last messages</h5>
+        <div class="row">
+            <div class="col s12" id="last-messages"></div>
+        </div>
+    </div>
+
 </body>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://momentjs.com/downloads/moment.js"></script>
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    $(".dropdown-trigger").dropdown();
+</script>
 <script>
 
-    const MAX_MESSAGES = 5;
+    const MAX_MESSAGES = 10;
 
     /* Form handling */
     var form = document.querySelector('form');
@@ -51,7 +101,7 @@
         var message = document.getElementById("message").value
         var endpoint = document.getElementById("endpoint").value
 
-        var data = JSON.stringify({"timestamp": timestamp, "message": message});
+        var data = JSON.stringify({ "timestamp": timestamp, "message": message });
         console.log("POST request: " + data);
         check(data, endpoint);
     });
@@ -68,7 +118,7 @@
         request.open("POST", endpoint, true);
 
         // Temporary: Inject user_key
-        var user_key = document.getElementById("user-key").value
+        var user_key = document.getElementById("user_key").value
         request.setRequestHeader("user_key", user_key)
 
         request.setRequestHeader("Content-Type", "application/json");
@@ -90,7 +140,7 @@
 
     function checkMaxMessage() {
         var count = document.getElementById("last-messages").childElementCount;
-        if (count >= MAX_MESSAGES-1) {
+        if (count >= MAX_MESSAGES) {
             document.getElementById("last-messages").lastChild.remove();
         }
     }
@@ -101,8 +151,8 @@
 
         document.querySelector('#last-messages').insertAdjacentHTML(
             'afterbegin',
-            `<p class="col-md-12"><strong>` + message.username + `:&nbsp;</strong>` +
-            message.message + `<sub><em>&nbsp;(` + timestamp + `)</em></sub></p>`
+            `<div class="card-panel"><strong>` + message.username + `:&nbsp;</strong>` +
+            message.message + `<sub><em>&nbsp;(` + timestamp + `)</em></sub></div>`
         )
     }
 </script>
