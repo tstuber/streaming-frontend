@@ -3,31 +3,33 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Messages</title>
-
+    <title>The Flashenger</title>
+    <!-- Favicons-->
+    <link rel="apple-touch-icon-precomposed" href="images/favicon/apple-touch-icon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta name="msapplication-TileImage" content="images/favicon/android-chrome-192x192.png">
+    <link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
+    <link rel="stylesheet" href="style/materialize.css" type="text/css" rel="stylesheet">
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
 </head>
 
 <body>
     <div class="container">
         <!-- Dropdown Structure -->
         <ul id="dropdown1" class="dropdown-content">
-            <li><a href="https://github.com/tstuber/streaming-frontend"><span class="red-text text-darken-4">Source Code Frontend App</span></a></li>
-            <li><a href="https://bitbucket.org/cs0978/agile-integration"><span class="red-text text-darken-4">Source Code Tutorial</span></a></li>
+            <li><a href="https://github.com/tstuber/streaming-frontend">Source Code Frontend App</a></li>
+            <li><a href="https://bitbucket.org/cs0978/agile-integration">Source Code Tutorial</a></li>
             <li class="divider"></li>
-            <li><a href="https://www.youtube.com/watch?v=2Q_ZzBGPdqE"><span class="red-text text-darken-4">Help</span</a></li>
+            <li><a href="https://www.youtube.com/watch?v=2Q_ZzBGPdqE">Help</a></li>
         </ul>
         <nav>
-            <div class="nav-wrapper red darken-4">
-                <a href="#!" class="brand-logo center"><i class="material-icons">flash_on</i>Mess<b>anger</b></a>
+            <div class="nav-wrapper">
+                <a onclick="M.toast({html: 'Zaaaaaap! Messaging faster than light!', displayLength: 1000})"
+                    class="brand-logo center"><i class="material-icons">flash_on</i>The <b>Flash</b>enger</a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="tokens" target="_blank">Auth Tokens</a></li>
                     <!-- Dropdown Trigger -->
@@ -44,34 +46,29 @@
             <form class="col s12">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">mode_edit</i>
-                    <input id="message" type="text" class="validate">
+                    <input id="message" type="text" required>
                     <label for="message">Message</label>
                 </div>
-
                 <div class="input-field col s12">
                     <i class="material-icons prefix">computer</i>
-                    <textarea id="endpoint" class="materialize-textarea"></textarea>
+                    <input id="endpoint" type="text" required>
                     <label for="endpoint">Endpoint</label>
                     <p>The endpoint <code>/direct/message</code> is provided by this frontend app and allows you to
                         write messages directly to Kafka. The goal is that you define your own endpoint.</p>
                 </div>
-
                 <div class="input-field col s12">
                     <i class="material-icons prefix">https</i>
                     <textarea id="user_key" class="materialize-textarea"></textarea>
                     <label for="user_key">User key</label>
                 </div>
-
                 <input type="hidden" id="submit-date" name="timestamp"><br>
-
-                <button class="btn waves-effect waves-light red darken-4" type="submit" name="action">Send
+                <button class="btn waves-effect waves-light" type="submit" name="action">Send
                     <i class="material-icons right">send</i>
                 </button>
-
             </form>
         </div>
     </div>
-<br>
+    <br>
     <div class="container">
         <h5>Last messages</h5>
         <div class="row">

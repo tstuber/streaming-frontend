@@ -24,7 +24,7 @@ public class MessageProcessor implements Processor {
         String msg = jsonRequest.get("message").textValue();
 
         // Create simulated CDC event message
-        Message message = new Message(counter++, timestamp, "Dummy Username", msg);
+        Message message = new Message(counter++, timestamp, "Direct", msg);
         CDCMessage cdcmessage = new CDCMessage(message);
 
         exchange.getIn().setBody(cdcmessage);
