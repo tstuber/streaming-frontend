@@ -1,4 +1,4 @@
-package ch.ipt.handson.kafka.authentication;
+package ch.ipt.handson.authentication;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;

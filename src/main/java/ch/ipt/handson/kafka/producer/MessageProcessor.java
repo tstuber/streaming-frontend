@@ -1,4 +1,4 @@
-package ch.ipt.handson.kafka.produce;
+package ch.ipt.handson.kafka.producer;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

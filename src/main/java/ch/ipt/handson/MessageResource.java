@@ -1,4 +1,4 @@
-package ch.ipt.handson.kafka;
+package ch.ipt.handson;
 
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.reactivestreams.Publisher;
@@ -16,8 +16,9 @@ import org.jboss.resteasy.annotations.SseElementType;
 @Path("/message")
 public class MessageResource {
 
+    // loads in-memory message stream from camel kafka consumer
     @Inject
-    @Channel("my-message-stream")
+    @Channel("message-stream")
     Publisher<String> messages; 
 
     @GET
